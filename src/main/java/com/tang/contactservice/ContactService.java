@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicLong;
 
 import org.springframework.stereotype.Component;
 
@@ -17,41 +18,34 @@ import com.tang.contactservice.model.Contact;
 @Component
 public class ContactService implements Service{
 	
-	private final Map<String, Contact> contactList = new ConcurrentHashMap<String, Contact>();
+	private static final AtomicLong counter = new AtomicLong();
+	private final Map<Long, Contact> contactList = new ConcurrentHashMap<Long, Contact>();
 	
-	public Map<String, Contact> getContactList() {
-		return contactList;
-	}
-
 	public ContactService(){
 		
 	}
 	
 	public boolean addContact(Contact contact) {
-		if(!contactList.containsKey(contact.getName())){
-			contactList.put(contact.getName(), contact);
+		if(!contactList.containsValue(contact)){
+			contactList.put(counter.incrementAndGet(), contact);
 			return true;
 		}
 		return false;
 	}
 
-	public boolean removeContact(Contact contact) {
-		return contactList.remove(contact.getName(), contact);
-	}
-
-	public boolean modifyContact(Contact newContact) {
-		contactList.replace(newContact.getName(), newContact);
+	public boolean modifyContactById(long id, Contact newContact) {
+		contactList.replace(newContact.getId(), newContact);
 		return false;
 	}
 
 	public List<Contact> searchContactByName(String name) {
 		List<Contact> list= new ArrayList<Contact>();
-		Iterator<Entry<String, Contact>> it = contactList.entrySet().iterator();
+		Iterator<Entry<Long, Contact>> it = contactList.entrySet().iterator();
 		
 		while(it.hasNext()){
-			Map.Entry<String, Contact> me = (Map.Entry<String, Contact>)it.next();
+			Map.Entry<Long, Contact> me = (Map.Entry<Long, Contact>)it.next();
 			
-			if(me.getKey().contains(name)){
+			if(me.getValue().getName().contains(name)){
 				list.add(me.getValue());
 			}
 			
@@ -63,6 +57,17 @@ public class ContactService implements Service{
 
 	public List<Contact> getAllContacts() {
 		return new ArrayList<Contact> (contactList.values());
+	}
+
+	public boolean removeContactById(long id) {
+		if(contactList.get(id) != null){
+			return contactList.remove(id, contactList.get(id));
+		}
+		return false;
+	}
+
+	public Contact searchContactById(long id) {
+		return contactList.get(id);
 	}
 
 
