@@ -1,6 +1,6 @@
 package com.tang.contactservice.controller;
 
-import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
@@ -15,21 +15,24 @@ import com.tang.contactservice.model.Contact;
 
 @ComponentScan
 @RestController
+/**
+ * Controller to expose methods as web service
+ */
 public class ContactServiceController {
 	
-	
+	//used to call CRUD operations
 	@Autowired
 	ContactService contactService;
 	
 	// Get all users
 	@RequestMapping(value="/contact/", method=RequestMethod.GET)
-	public List<Contact> getAllContacts(){
+	public Map<Long, Contact> getAllContacts(){
 		return contactService.getAllContacts();
 	}
 	
 	// Get contact(s) by name
 	@RequestMapping(value="/contact/{name}", method=RequestMethod.GET)
-	public List<Contact> searchContactByName(@PathVariable("name") String name){
+	public Map<Long, Contact> searchContactByName(@PathVariable("name") String name){
 		return contactService.searchContactByName(name);
 	}
 	
@@ -45,7 +48,7 @@ public class ContactServiceController {
 		return contactService.removeContactById(id);
 	}
 	
-	// Modify a contact
+	// Modify a contact by ID
 	@RequestMapping(value="/contact/{id}", method=RequestMethod.PUT)
 	public boolean modifyContact(@PathVariable("id") long id, @RequestBody Contact contact){
 		return contactService.modifyContactById(id, contact);

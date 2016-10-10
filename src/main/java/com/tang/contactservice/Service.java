@@ -3,13 +3,13 @@
  */
 package com.tang.contactservice;
 
-import java.util.List;
+import java.util.Map;
 
 import com.tang.contactservice.model.Contact;
 
 /**
  * @author Tang
- * Interface that contains web service methods
+ * Service Interface which defines CRUD operations for contacts
  */
 public interface Service {
 	
@@ -23,11 +23,8 @@ public interface Service {
 	public boolean modifyContactById(long id, Contact newContact);
 	
 	//search a contact by exact name or substring
-	public List<Contact> searchContactByName(String name);
-	
-	//search a contact by ID
-	public Contact searchContactById(long id);
+	public Map<Long, Contact> searchContactByName(String name);
 	
 	//return the list of contacts
-	public List<Contact> getAllContacts();
+	public Map<Long, Contact> getAllContacts();
 }

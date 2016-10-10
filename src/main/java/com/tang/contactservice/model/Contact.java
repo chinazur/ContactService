@@ -1,24 +1,29 @@
 package com.tang.contactservice.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+/**
+ * @author Tang
+ * POJO for Contact
+ */
 public class Contact {
 
-	private final long id;
+	//contact information
 	private final String name;
 	private final String phone;
 	private final String address;
 	
-	//Constructor with name, phone and address
-	public Contact(long id, String name, String phone, String address){
-		this.id = id;
+	//Constructor with JSON properties binding
+	@JsonCreator
+	public Contact(@JsonProperty("name") String name, 
+			@JsonProperty("phone") String phone, 
+			@JsonProperty("address") String address){
 		this.name = name;
 		this.phone = phone;
 		this.address = address;
 	}
 
-	public long getId() {
-		return id;
-	}
-	
 	public String getName() {
 		return name;
 	}
@@ -31,6 +36,7 @@ public class Contact {
 		return address;
 	}
 	
+	//if all fields are equal, then 2 contacts are equal
 	public boolean equals(Object object){
 		if(object == null){
 			return false;
@@ -38,8 +44,9 @@ public class Contact {
 			return false;
 		}else{
 			Contact contact = (Contact) object;
-			if(id == contact.getId() && name.equals(contact.getName()) 
-					&& phone.equals(contact.getPhone()) && address.equals(contact.getAddress())){
+			if(name.equals(contact.getName()) 
+					&& phone.equals(contact.getPhone()) 
+					&& address.equals(contact.getAddress())){
 				return true;
 			}
 		}
