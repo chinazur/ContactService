@@ -1,5 +1,6 @@
 package com.tang.ContactService;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.slf4j.Logger;
@@ -16,24 +17,26 @@ import junit.framework.TestCase;
  * Unit test for simple App.
  */
 public class AppTest extends TestCase{
-    public static final String CONTACT_SERVICE_URL = "http://localhost:8080/contact/";
+    public static final String CONTACT_SERVICE_URL = "http://localhost:8080/contacts/";
     public static final Logger LOG = LoggerFactory.getLogger(AppTest.class);
     
     public void testAddContact(){
     	RestTemplate restTemplate = new RestTemplate();
     	
     	Contact contact = new Contact("tang1", "0336", "antibes");
-    	if(restTemplate.postForObject(CONTACT_SERVICE_URL, contact, Boolean.class)){
-    		LOG.info("contact added");
-    	}else{
-    		LOG.error("contact not added");
+    	Contact result = restTemplate.postForObject(CONTACT_SERVICE_URL, contact, Contact.class);
+    	ObjectMapper om = new ObjectMapper();
+    	try{
+    		LOG.info(om.writerWithDefaultPrettyPrinter().writeValueAsString(result));
+    	}catch(JsonProcessingException e){
+    		LOG.error(e.getMessage());
     	}
     }
     
     public void testGetContactsByName(){
     	RestTemplate restTemplate = new RestTemplate();
     	String name = "tan";
-    	HashMap<Long, Contact> contactList = restTemplate.getForObject(CONTACT_SERVICE_URL + name, HashMap.class);
+    	ArrayList<Contact> contactList = restTemplate.getForObject(CONTACT_SERVICE_URL + name, ArrayList.class);
         
         if(contactList.isEmpty()){
         	LOG.info("no contact found");
@@ -44,15 +47,13 @@ public class AppTest extends TestCase{
         	}catch(JsonProcessingException e){
         		LOG.error(e.getMessage());
         	}
-        
-        	
         }
     }
     
     public void testGetAllContacts(){
     	RestTemplate restTemplate = new RestTemplate();
     	
-    	HashMap<Long, Contact> contactList = restTemplate.getForObject(CONTACT_SERVICE_URL, HashMap.class);
+    	ArrayList<Contact> contactList = restTemplate.getForObject(CONTACT_SERVICE_URL, ArrayList.class);
         
         if(contactList.isEmpty()){
         	LOG.info("no contact found");
@@ -63,8 +64,6 @@ public class AppTest extends TestCase{
         	}catch(JsonProcessingException e){
         		LOG.error(e.getMessage());
         	}
-        
-        	
         }
     }
     
