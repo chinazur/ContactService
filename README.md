@@ -11,14 +11,14 @@
 - Modify a contact
 
 ###Technologies
--It is written using SpringBoot framework. 
--The project is maintained by GIT.
--Dependencies are managed by Maven.
--Tests are written in JUnit.
+- It is written using SpringBoot framework. 
+- The project is maintained by GIT.
+- Dependencies are managed by Maven.
+- Tests are written in JUnit.
 
 ###Package explanation:
--com.tang.contactservice: Main entry for the project. Please run it as an application.
--com.tang.contactservice.model: POJO for a Contact object
--com.tang.contactservice.service: Concrete implementations for Contact Service (CRUD operations)
--com.tang.contactservice.controller: API for web service
--com.tang.ContactService: Junit test package
+- com.tang.contactservice: Main entry for the project. Please run it as an application.
+- com.tang.contactservice.model: POJO for a Contact object
+- com.tang.contactservice.service: Concrete implementations for Contact Service (CRUD operations)
+- com.tang.contactservice.controller: API for web service
+- com.tang.ContactService: Junit test package
