@@ -50,7 +50,7 @@ public class ContactServiceController {
 	
 	// Modify a contact by ID
 	@RequestMapping(value="/contact/{id}", method=RequestMethod.PUT)
-	public boolean modifyContact(@PathVariable("id") long id, @RequestBody Contact contact){
+	public boolean modifyContactById(@PathVariable("id") long id, @RequestBody Contact contact){
 		return contactService.modifyContactById(id, contact);
 	}
 }

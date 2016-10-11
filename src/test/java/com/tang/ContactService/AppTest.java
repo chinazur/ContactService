@@ -76,5 +76,13 @@ public class AppTest extends TestCase{
     	
     	restTemplate.put(CONTACT_SERVICE_URL + id, contact);
     }
+    
+    public void testDeleteContact(){
+    	RestTemplate restTemplate = new RestTemplate();
+    	
+    	String id = "2";
+    	
+    	restTemplate.delete(CONTACT_SERVICE_URL + id);
+    }
 
 }

@@ -7,8 +7,11 @@ import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import com.tang.ContactService.AppTest;
 import com.tang.contactservice.model.Contact;
 
 /**
@@ -21,6 +24,8 @@ public class ContactService implements Service{
 	//counter used to increment contact's ID
 	private static final AtomicLong counter = new AtomicLong();
 	
+    public static final Logger LOG = LoggerFactory.getLogger(ContactService.class);
+
 	/**
 	 * ConcurrentHashMap to store all contacts
 	 * key: contact's ID
@@ -43,6 +48,7 @@ public class ContactService implements Service{
 			contactList.put(counter.incrementAndGet(), contact);
 			return true;
 		}
+		LOG.info("contact already exists");
 		return false;
 	}
 
@@ -55,7 +61,7 @@ public class ContactService implements Service{
 			contactList.replace(id, newContact);
 			return true;
 		}
-		
+		LOG.info("contact does not exists");
 		return false;
 	}
 
@@ -95,6 +101,7 @@ public class ContactService implements Service{
 		if(contactList.get(id) != null){
 			return contactList.remove(id, contactList.get(id));
 		}
+		LOG.info("contact does not exists");
 		return false;
 	}
 }
