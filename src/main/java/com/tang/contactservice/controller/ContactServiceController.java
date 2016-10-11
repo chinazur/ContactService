@@ -24,7 +24,7 @@ public class ContactServiceController {
 	@Autowired
 	ContactService contactService;
 	
-	// Get all users
+	// Get all Contacts
 	@RequestMapping(value="/contact/", method=RequestMethod.GET)
 	public Map<Long, Contact> getAllContacts(){
 		return contactService.getAllContacts();
