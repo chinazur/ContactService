@@ -1,7 +1,6 @@
 package com.tang.ContactService;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +13,7 @@ import com.tang.contactservice.model.Contact;
 import junit.framework.TestCase;
 
 /**
- * Unit test for simple App.
+ * Unit test for Contact Service
  */
 public class AppTest extends TestCase{
     public static final String CONTACT_SERVICE_URL = "http://localhost:8080/contacts/";
