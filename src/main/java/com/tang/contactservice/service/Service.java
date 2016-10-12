@@ -4,7 +4,6 @@
 package com.tang.contactservice.service;
 
 import java.util.List;
-import java.util.Map;
 
 import com.tang.contactservice.model.Contact;
 
@@ -15,17 +14,19 @@ import com.tang.contactservice.model.Contact;
 public interface Service {
 	
 	//add a contact
-	public Contact addContact(Contact contact) throws Exception;
+	Contact addContact(Contact contact);
 	
 	//remove a contact
-	public void removeContactById(long id) throws Exception;
+	void removeContactById(long id);
 	
 	//modify a contact
-	public Contact modifyContactById(long id, Contact newContact) throws Exception;
+	Contact modifyContactById(long id, Contact newContact);
 	
 	//search a contact by exact name or substring
-	public List<Contact> searchContactByName(String name);
+	List<Contact> searchContactByName(String name);
 	
 	//return the list of contacts
-	public List<Contact> getAllContacts();
+	List<Contact> getAllContacts();
+	
+	boolean findContactById(long id);
 }

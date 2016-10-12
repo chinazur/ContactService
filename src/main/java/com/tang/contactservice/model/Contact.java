@@ -1,6 +1,8 @@
 package com.tang.contactservice.model;
 
-import java.util.Objects;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -52,30 +54,32 @@ public class Contact {
 	
 	@Override
     public int hashCode() {
-        int hash = 7;
-        hash = 17 * hash + Objects.hashCode(this.name);
-        hash = 17 * hash + Objects.hashCode(this.phone);
-        hash = 17 * hash + Objects.hashCode(this.address);
-        return hash;
+		return new HashCodeBuilder(17, 37).
+			       append(this.name).
+			       append(this.phone).
+			       append(this.address).
+			       toHashCode();
     }
 	
 	//if all fields are equal, then 2 contacts are equal
 	@Override
-	public boolean equals(Object object){
-		if(object == null){
-			return false;
-		}else if(object == this){
-			return true;
-		}else if(! (object instanceof Contact)){
-			return false;
-		}else{
-			Contact contact = (Contact) object;
-			if(name.equals(contact.getName()) 
-					&& phone.equals(contact.getPhone()) 
-					&& address.equals(contact.getAddress())){
-				return true;
-			}
-		}
-		return false;
+	public boolean equals(Object obj){
+		if (obj == null) { return false; }
+		   if (obj == this) { return true; }
+		   if (obj.getClass() != getClass()) {
+		     return false;
+		   }
+		   Contact rhs = (Contact) obj;
+		   return new EqualsBuilder()
+		                 .appendSuper(super.equals(obj))
+		                 .append(name, rhs.getName())
+		                 .append(phone, rhs.getPhone())
+		                 .append(address, rhs.getAddress())
+		                 .isEquals();
+	}
+	
+	@Override
+	public String toString(){
+		   return ToStringBuilder.reflectionToString(this);
 	}
 }

@@ -1,5 +1,6 @@
 package com.tang.ContactService;
 
+import org.testng.annotations.Test;
 import java.util.ArrayList;
 
 import org.slf4j.Logger;
@@ -10,15 +11,15 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tang.contactservice.model.Contact;
 
-import junit.framework.TestCase;
-
 /**
  * Unit test for Contact Service
  */
-public class AppTest extends TestCase{
+public class AppTest{
     public static final String CONTACT_SERVICE_URL = "http://localhost:8080/contacts/";
     public static final Logger LOG = LoggerFactory.getLogger(AppTest.class);
     
+    //@Test(threadPoolSize = 3, invocationCount = 90,  timeOut = 10000)
+    @Test
     public void testAddContact(){
     	RestTemplate restTemplate = new RestTemplate();
     	
@@ -32,7 +33,8 @@ public class AppTest extends TestCase{
     	}
     }
     
-    public void testGetContactsByName(){
+    @Test
+	public void testGetContactsByName(){
     	RestTemplate restTemplate = new RestTemplate();
     	String name = "tan";
     	ArrayList<Contact> contactList = restTemplate.getForObject(CONTACT_SERVICE_URL + name, ArrayList.class);
@@ -49,7 +51,8 @@ public class AppTest extends TestCase{
         }
     }
     
-    public void testGetAllContacts(){
+    @Test
+	public void testGetAllContacts(){
     	RestTemplate restTemplate = new RestTemplate();
     	
     	ArrayList<Contact> contactList = restTemplate.getForObject(CONTACT_SERVICE_URL, ArrayList.class);
@@ -66,7 +69,8 @@ public class AppTest extends TestCase{
         }
     }
     
-    public void testModifyContact(){
+    @Test
+	public void testModifyContact(){
     	RestTemplate restTemplate = new RestTemplate();
     	
     	Contact contact = new Contact("lina", "2161", "sophia");
@@ -75,7 +79,8 @@ public class AppTest extends TestCase{
     	restTemplate.put(CONTACT_SERVICE_URL + id, contact);
     }
     
-    public void testDeleteContact(){
+    @Test
+	public void testDeleteContact(){
     	RestTemplate restTemplate = new RestTemplate();
     	
     	String id = "2";
