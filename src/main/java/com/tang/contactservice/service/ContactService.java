@@ -112,4 +112,8 @@ public class ContactService implements Service {
 	public boolean findContactById(long id) {
 		return contactList.containsKey(id);
 	}
+
+	public void deleteAllContacts() {
+		contactList.clear();
+	}
 }

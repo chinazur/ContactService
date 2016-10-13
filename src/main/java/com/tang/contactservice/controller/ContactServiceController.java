@@ -25,9 +25,11 @@ import com.tang.contactservice.service.ContactService;
 public class ContactServiceController {
 
 	public static final Logger LOG = LoggerFactory.getLogger(ContactServiceController.class);
-	public static final String USER_ALREADY_EXISTS = "User Already Exists";
-	public static final String NO_USER_FOUND = "No user found";
-	public static final String USER_DELETED = "User deleted";
+	public static final String CONTACT_ALREADY_EXISTS = "Contact Already Exists";
+	public static final String NO_CONTACT_FOUND = "No contact found";
+	public static final String CONTACT_DELETED = "Contact deleted";
+	public static final String ALL_CONTACTS_DELETED = "All contacts deleted";
+
 
 	// used to call CRUD operations
 	@Autowired
@@ -39,9 +41,17 @@ public class ContactServiceController {
 	public ResponseEntity<List<Contact>> getAllContacts() {
 		List<Contact> list = contactService.getAllContacts();
 		if(list.isEmpty()){
-			return new ResponseEntity(NO_USER_FOUND, HttpStatus.NOT_FOUND);
+			return new ResponseEntity(NO_CONTACT_FOUND, HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<List<Contact>>(list, HttpStatus.OK);
+	}
+	
+	// Delete all Contacts
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@RequestMapping(method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity deleteAllContacts() {
+		contactService.deleteAllContacts();
+		return new ResponseEntity(HttpStatus.OK);
 	}
 
 	// Get contact(s) by name
@@ -50,7 +60,7 @@ public class ContactServiceController {
 	public ResponseEntity<List<Contact>> searchContactByName(@PathVariable("name") String name) {
 		List<Contact> list = contactService.searchContactByName(name);
 		if(list.isEmpty()){
-			return new ResponseEntity(NO_USER_FOUND, HttpStatus.NOT_FOUND);
+			return new ResponseEntity(NO_CONTACT_FOUND, HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<List<Contact>>(list, HttpStatus.OK);
 	}
@@ -63,7 +73,7 @@ public class ContactServiceController {
 		if (result != null) {
 			return new ResponseEntity<Contact>(result, HttpStatus.CREATED);
 		}
-		return new ResponseEntity<String>(USER_ALREADY_EXISTS, HttpStatus.CONFLICT);
+		return new ResponseEntity<String>(CONTACT_ALREADY_EXISTS, HttpStatus.CONFLICT);
 	}
 
 	// Delete a contact by ID
@@ -72,10 +82,10 @@ public class ContactServiceController {
 	public ResponseEntity removeContactById(@PathVariable("id") long id) {
 		if(contactService.findContactById(id)){
 			if(contactService.removeContactById(id)){
-				return new ResponseEntity<String>(USER_DELETED, HttpStatus.OK);
+				return new ResponseEntity<String>(CONTACT_DELETED, HttpStatus.OK);
 			}
 		}
-		return new ResponseEntity<String>(NO_USER_FOUND, HttpStatus.NOT_FOUND);
+		return new ResponseEntity<String>(NO_CONTACT_FOUND, HttpStatus.NOT_FOUND);
 	}
 
 	// Modify a contact by ID
@@ -87,8 +97,8 @@ public class ContactServiceController {
 			if (result != null) {
 				return new ResponseEntity<Contact>(result, HttpStatus.CREATED);
 			}
-			return new ResponseEntity<String>(USER_ALREADY_EXISTS, HttpStatus.CONFLICT);
+			return new ResponseEntity<String>(CONTACT_ALREADY_EXISTS, HttpStatus.CONFLICT);
 		}
-		return new ResponseEntity<String>(NO_USER_FOUND, HttpStatus.NOT_FOUND);
+		return new ResponseEntity<String>(NO_CONTACT_FOUND, HttpStatus.NOT_FOUND);
 	}
 }

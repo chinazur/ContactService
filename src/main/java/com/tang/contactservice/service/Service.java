@@ -29,4 +29,6 @@ public interface Service {
 	List<Contact> getAllContacts();
 	
 	boolean findContactById(long id);
+	
+	void deleteAllContacts();
 }

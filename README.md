@@ -14,7 +14,7 @@
 - It is written using SpringBoot framework. 
 - The project is maintained by GIT.
 - Dependencies are managed by Maven.
-- Tests are written in JUnit.
+- Tests are written in TestNG.
 
 ### Development process
 - At first, i tried to use Eclipse's template "Dynamic Web Project" in order to create web service, with Axis2. But the structure is very heavy, and the result is in XML.
@@ -27,13 +27,25 @@
 - 1. ConcurrentHashMap
 - 2. SynchronizedHashMap
 - I've chosen ConcurrentHashMap as it takes care of synchronization itself. Also, in the POJO class, i only put getters to avoid unwanted manipulations to the object fields. But there has to be setters for the ID field in order to display nicely the contact information.
+- It seems i cannot use the putIfAbsent method to return the new contact object when we are creating one, because this method returns null or the previous associated value.
 
+- In order to make the result of web service more meaningful, i have modified the return value types from the real contact object(s) to ResponseEntiy collections.
 
-- In order to test concurrenct request, i've chosen TestNG framework becasue it offers annotation to simulate concurrency.-
+###Test Cases
+- The test cases are divided into two categories
+- 1. Functional Tests
+- 2. Concurrency Tests
+
+- Functional tests include logical use cases, for example, add twice the same contact, or add one contact and delete it twice.
+
+- Concurrency tests aims at running the same test (but with different parameters) many times concurrently, which will demonstrate the concurrency handling of this project.
+
+- In order to test concurrenct request, there are many setup to be done with JUnit. To make it simpler, i've chosen TestNG framework because it offers annotation to simulate concurrency. So that i could focus on the test cases directly.
 
 ###Package explanation:
 - com.tang.contactservice: Main entry for the project. Please run it as an application.
 - com.tang.contactservice.model: POJO for a Contact object
 - com.tang.contactservice.service: Concrete implementations for Contact Service (CRUD operations)
 - com.tang.contactservice.controller: API for web service
-- com.tang.ContactService: Junit test package
+- com.tang.ContactService: TestNG test package
+
