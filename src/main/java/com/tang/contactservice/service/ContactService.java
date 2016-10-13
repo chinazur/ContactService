@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.slf4j.Logger;
@@ -29,7 +30,7 @@ public class ContactService implements Service {
 	 * ConcurrentHashMap to store all contacts key: contact's ID value: Contact
 	 * object
 	 */
-	private final Map<Long, Contact> contactList = new HashMap<Long, Contact>();
+	private final Map<Long, Contact> contactList = new ConcurrentHashMap<Long, Contact>();
 
 	/**
 	 * Dummy constructor
@@ -43,15 +44,12 @@ public class ContactService implements Service {
 	 */
 	public Contact addContact(Contact contact) {
 		LOG.info("adding contact : {}", contact);
-
-		synchronized (contactList) {
-			if (!contactList.containsValue(contact)) {
-				long id = counter.incrementAndGet();
-				contact.setId(id);
-				contactList.put(id, contact);
-				LOG.info("contact added : {}", contact);
-				return contact;
-			}
+		if (!contactList.containsValue(contact)) {
+			long id = counter.incrementAndGet();
+			contact.setId(id);
+			contactList.put(id, contact);
+			LOG.info("contact added : {}", contact);
+			return contact;
 		}
 
 		return null;
@@ -64,11 +62,9 @@ public class ContactService implements Service {
 	public Contact modifyContactById(long id, Contact newContact) {
 		LOG.info("modifying contact : {}", newContact);
 
-		synchronized (contactList) {
-			if (!contactList.containsValue(newContact)) {
-				newContact.setId(id);
-				return contactList.replace(id, newContact);
-			}
+		if (!contactList.containsValue(newContact)) {
+			newContact.setId(id);
+			return contactList.replace(id, newContact);
 		}
 		return null;
 	}
@@ -82,15 +78,13 @@ public class ContactService implements Service {
 
 		List<Contact> list = new ArrayList<Contact>();
 
-		synchronized (contactList) {
-			Iterator<Entry<Long, Contact>> it = contactList.entrySet().iterator();
+		Iterator<Entry<Long, Contact>> it = contactList.entrySet().iterator();
 
-			while (it.hasNext()) {
-				Map.Entry<Long, Contact> me = (Map.Entry<Long, Contact>) it.next();
+		while (it.hasNext()) {
+			Map.Entry<Long, Contact> me = (Map.Entry<Long, Contact>) it.next();
 
-				if (me.getValue().getName().contains(name)) {
-					list.add(me.getValue());
-				}
+			if (me.getValue().getName().contains(name)) {
+				list.add(me.getValue());
 			}
 		}
 		return list;
@@ -112,15 +106,10 @@ public class ContactService implements Service {
 	public boolean removeContactById(long id) {
 		LOG.info("removing contact with id : {} ", id);
 
-		synchronized (contactList) {
-			return contactList.remove(id, contactList.get(id));
-		}
-
+		return contactList.remove(id, contactList.get(id));
 	}
 
 	public boolean findContactById(long id) {
-		synchronized (contactList) {
-			return contactList.containsKey(id);
-		}
+		return contactList.containsKey(id);
 	}
 }

@@ -53,7 +53,7 @@ public class Contact {
 		return new HashCodeBuilder(17, 37).append(this.name).append(this.phone).append(this.address).toHashCode();
 	}
 
-	// if all fields are equal, then 2 contacts are equal
+	//!! ID is not checked here
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == null) {
