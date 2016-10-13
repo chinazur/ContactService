@@ -17,7 +17,7 @@ public interface Service {
 	Contact addContact(Contact contact);
 	
 	//remove a contact
-	void removeContactById(long id);
+	boolean removeContactById(long id);
 	
 	//modify a contact
 	Contact modifyContactById(long id, Contact newContact);

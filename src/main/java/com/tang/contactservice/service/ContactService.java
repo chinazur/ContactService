@@ -48,7 +48,9 @@ public class ContactService implements Service {
 			if (!contactList.containsValue(contact)) {
 				long id = counter.incrementAndGet();
 				contact.setId(id);
-				return contactList.put(id, contact);
+				contactList.put(id, contact);
+				LOG.info("contact added : {}", contact);
+				return contact;
 			}
 		}
 
@@ -107,11 +109,11 @@ public class ContactService implements Service {
 	/**
 	 * if id exists, remove it and its corresponding value from the map
 	 */
-	public void removeContactById(long id) {
+	public boolean removeContactById(long id) {
 		LOG.info("removing contact with id : {} ", id);
 
 		synchronized (contactList) {
-			contactList.remove(id, contactList.get(id));
+			return contactList.remove(id, contactList.get(id));
 		}
 
 	}

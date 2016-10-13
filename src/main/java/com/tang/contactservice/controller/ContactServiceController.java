@@ -71,8 +71,9 @@ public class ContactServiceController {
 	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
 	public ResponseEntity removeContactById(@PathVariable("id") long id) {
 		if(contactService.findContactById(id)){
-			contactService.removeContactById(id);
-			return new ResponseEntity<String>(USER_DELETED, HttpStatus.OK);
+			if(contactService.removeContactById(id)){
+				return new ResponseEntity<String>(USER_DELETED, HttpStatus.OK);
+			}
 		}
 		return new ResponseEntity<String>(NO_USER_FOUND, HttpStatus.NOT_FOUND);
 	}
