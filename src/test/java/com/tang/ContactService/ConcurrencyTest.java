@@ -17,10 +17,9 @@ import com.tang.contactservice.model.Contact;
 /**
  * Unit test for Contact Service
  */
-@Test(threadPoolSize = 3, invocationCount = 10,  timeOut = 10000)
-public class AppTest {
+public class ConcurrencyTest {
 	public static final String CONTACT_SERVICE_URL = "http://localhost:8080/contacts/";
-	public static final Logger LOG = LoggerFactory.getLogger(AppTest.class);
+	public static final Logger LOG = LoggerFactory.getLogger(ConcurrencyTest.class);
 
 	@Test(threadPoolSize = 5, invocationCount = 100, timeOut = 10000)
 	public void testAddContact() {
