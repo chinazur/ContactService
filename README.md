@@ -33,7 +33,7 @@
 
 ###Test Cases
 At the beginning, i used Postman to test web services directly.
-After words i wrote test cases with testNG.
+Afterwards i wrote test cases with testNG.
 
 - The test cases are divided into two categories
 - 1. Functional Tests
@@ -43,7 +43,7 @@ After words i wrote test cases with testNG.
 
 - Concurrency tests aims at running the same test (but with different parameters) many times concurrently, which will demonstrate the concurrency handling of this project.
 
-- In order to test concurrenct request, there are many setup to be done with JUnit. To make it simpler, i've chosen TestNG framework because it offers annotation to simulate concurrency. So that i could focus on the test cases directly.
+- In order to test concurrenct request, there are many setups to be done with JUnit. To make it simpler, i've chosen TestNG framework because it offers annotation to simulate concurrency. So that i could focus on the test cases directly.
 
 The simpliest way to run is to import this project into Eclipse directly via git clone url, and install TestNG plugin. Run App.java as java applicaiton to launch the embedded Tomcat server, and run the 2 test classes via TestNG.
 
