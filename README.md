@@ -45,6 +45,8 @@ After words i wrote test cases with testNG.
 
 - In order to test concurrenct request, there are many setup to be done with JUnit. To make it simpler, i've chosen TestNG framework because it offers annotation to simulate concurrency. So that i could focus on the test cases directly.
 
+The simpliest way to run is to import this project into Eclipse directly via git clone url, and install TestNG plugin. Run App.java as java applicaiton to launch the embedded Tomcat server, and run the 2 test classes via TestNG.
+
 ###Package explanation:
 - com.tang.contactservice: Main entry for the project. Please run it as an application.
 - com.tang.contactservice.model: POJO for a Contact object
