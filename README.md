@@ -32,6 +32,9 @@
 - In order to make the result of web service more meaningful, i have modified the return value types from the real contact object(s) to ResponseEntiy collections.
 
 ###Test Cases
+At the beginning, i used Postman to test web services directly.
+After words i wrote test cases with testNG.
+
 - The test cases are divided into two categories
 - 1. Functional Tests
 - 2. Concurrency Tests

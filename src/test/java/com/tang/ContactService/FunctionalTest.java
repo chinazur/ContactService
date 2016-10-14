@@ -1,6 +1,8 @@
 package com.tang.ContactService;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Random;
 
 import org.apache.commons.lang3.RandomStringUtils;
@@ -51,8 +53,8 @@ public class FunctionalTest {
 	public void testGetContactsByName() {
 		RestTemplate restTemplate = new RestTemplate();
 		try {
-			ArrayList<Contact> contactList = restTemplate
-					.getForObject(CONTACT_SERVICE_URL + RandomStringUtils.randomAlphabetic(1), ArrayList.class);
+			List<LinkedHashMap<String, Object>> contactList = restTemplate
+					.getForObject(CONTACT_SERVICE_URL + RandomStringUtils.randomAlphabetic(1), List.class);
 			ObjectMapper om = new ObjectMapper();
 			LOG.info(om.writerWithDefaultPrettyPrinter().writeValueAsString(contactList));
 		} catch (HttpClientErrorException e) {
@@ -71,7 +73,7 @@ public class FunctionalTest {
 	public void testGetAllContacts() {
 		RestTemplate restTemplate = new RestTemplate();
 		try {
-			ArrayList<Contact> contactList = restTemplate.getForObject(CONTACT_SERVICE_URL, ArrayList.class);
+			List<LinkedHashMap<String, Object>> contactList = restTemplate.getForObject(CONTACT_SERVICE_URL, List.class);
 
 			ObjectMapper om = new ObjectMapper();
 			LOG.info(om.writerWithDefaultPrettyPrinter().writeValueAsString(contactList));
